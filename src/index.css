@@ -1,0 +1,473 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&family=Silkscreen&family=VT323&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+QingKe+HuangYou&family=DotGothic16&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Chakra Petch';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Share Tech Mono';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Silkscreen';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'VT323';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Chakra Petch", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Share Tech Mono", "Noto Sans SC", ui-monospace, SFMono-Regular, monospace;
+  --font-crt: "VT323", "DotGothic16", "ZCOOL QingKe HuangYou", "Noto Sans SC", monospace;
+  --font-pixel: "Silkscreen", "DotGothic16", "ZCOOL QingKe HuangYou", "Noto Sans SC", monospace;
+}
+
+body {
+  background-color: #050505;
+  color: #a1a1aa;
+  overflow-x: hidden;
+  margin: 0;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  cursor: none; /* Hide default cursor for custom 3D cursor */
+}
+
+/* Hide cursor on interactive elements too */
+a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
+  cursor: none !important;
+}
+
+/* Dynamic Cyber Grid Background */
+.cyber-grid-wrapper {
+  position: fixed;
+  inset: 0;
+  perspective: 800px;
+  z-index: 0;
+  overflow: hidden;
+  background: #020202;
+  pointer-events: none;
+  contain: strict;
+}
+
+/* Horizon Glow */
+.cyber-grid-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(74, 222, 128, 0.5);
+  box-shadow: 0 0 30px 10px rgba(74, 222, 128, 0.2);
+  z-index: 1;
+}
+
+.cyber-grid {
+  position: absolute;
+  width: 200vw;
+  height: 60vh;
+  top: 50%;
+  left: -50vw;
+  background-image: 
+    linear-gradient(to right, rgba(74, 222, 128, 0.4) 1px, transparent 1px),
+    linear-gradient(to top, rgba(74, 222, 128, 0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform-origin: top center;
+  transform: rotateX(70deg) translateZ(0);
+  animation: gridMove 1s linear infinite;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 40%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 40%);
+  will-change: background-position;
+}
+
+.cyber-grid-top {
+  position: absolute;
+  width: 200vw;
+  height: 60vh;
+  bottom: 50%;
+  left: -50vw;
+  background-image: 
+    linear-gradient(to right, rgba(74, 222, 128, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(74, 222, 128, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform-origin: bottom center;
+  transform: rotateX(-70deg);
+  animation: gridMoveTop 1s linear infinite;
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 40%);
+  mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 40%);
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+
+@keyframes gridMoveTop {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -40px; }
+}
+
+/* Pause background animations when modal is open */
+.modal-open .cyber-grid,
+.modal-open .cyber-grid-top,
+.modal-open .glitch-slice-1,
+.modal-open .glitch-slice-2,
+.modal-open .glitch-slice-3 {
+  animation-play-state: paused;
+}
+
+/* Enhanced Glitch Effects */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(74, 222, 128, 0.05) 2px,
+    rgba(74, 222, 128, 0.05) 4px
+  );
+  contain: strict;
+}
+
+.glitch-slice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: rgba(74, 222, 128, 0.4);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: opacity, transform;
+}
+
+.glitch-slice-1 { top: 20%; animation: sliceGlitch 4s infinite 0.5s; }
+.glitch-slice-2 { top: 50%; height: 2px; animation: sliceGlitch 7s infinite 2s; }
+.glitch-slice-3 { top: 80%; height: 10px; animation: sliceGlitch 5s infinite 3.5s; }
+
+@keyframes sliceGlitch {
+  0%, 95%, 100% { opacity: 0; transform: translateX(0) scaleY(1); }
+  96% { opacity: 0.8; transform: translateX(-20px) scaleY(2); background: #06b6d4; box-shadow: 0 0 20px #06b6d4; }
+  97% { opacity: 0.8; transform: translateX(20px) scaleY(0.5); background: #ef4444; box-shadow: 0 0 20px #ef4444; }
+  98% { opacity: 0.5; transform: translateX(-10px) scaleY(1.5); background: #4ade80; }
+}
+
+/* Enhanced 3D Cyber Module */
+.cyber-module {
+  background: linear-gradient(145deg, #1c1c20, #121214);
+  border: 1px solid #000;
+  border-radius: 16px;
+  box-shadow: 
+    8px 12px 24px -4px rgba(0,0,0,0.9),
+    inset 2px 2px 4px rgba(255,255,255,0.05),
+    inset -2px -2px 6px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+/* Hardware Noise Texture */
+.cyber-module::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* Inset Panel for depth hierarchy */
+.cyber-inset {
+  background: #050505;
+  border-radius: 8px;
+  box-shadow: 
+    inset 3px 3px 10px rgba(0,0,0,0.9),
+    inset -1px -1px 2px rgba(255,255,255,0.02),
+    0 1px 1px rgba(255,255,255,0.05);
+  border: 1px solid #1f1f22;
+  position: relative;
+  z-index: 1;
+}
+
+/* 3D Stereoscopic Button */
+.cyber-btn {
+  background: linear-gradient(to bottom, #27272a, #18181b);
+  border: 1px solid #3f3f46;
+  border-bottom: 4px solid #09090b;
+  border-right: 2px solid #09090b;
+  border-radius: 8px;
+  color: #a1a1aa;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.1);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cyber-btn:active {
+  transform: translate(2px, 3px);
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 1px 1px 4px rgba(0,0,0,0.8);
+  background: #18181b;
+}
+
+.cyber-btn:hover {
+  color: #4ade80;
+  border-top-color: #4ade80;
+}
+
+/* Inner Bezel for the Screen */
+.screen-bezel {
+  background: #050505;
+  border-radius: 12px;
+  box-shadow: 
+    inset 4px 4px 20px rgba(0,0,0,1),
+    inset -2px -2px 10px rgba(0,0,0,0.8),
+    0 1px 1px rgba(255,255,255,0.1);
+  padding: 16px;
+  border: 1px solid #1f1f22;
+  position: relative;
+  z-index: 1;
+}
+
+/* CRT Screen (Preserved & slightly modernized) */
+.crt-screen {
+  background-color: #050805;
+  border-radius: 8px;
+  box-shadow: 
+    inset 0 0 60px rgba(0,0,0,1),
+    inset 0 0 20px rgba(0,0,0,0.9),
+    0 0 0 2px #000;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT Glass Glare */
+.crt-screen::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+  pointer-events: none;
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
+  z-index: 20;
+}
+
+/* Scanlines */
+.scanlines-tv {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0.2)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* TV Static Noise */
+.tv-static {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  animation: staticFlicker 0.05s infinite;
+  z-index: 5;
+}
+
+@keyframes staticFlicker {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Futuristic Jog Dial */
+.cyber-dial {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #27272a, #18181b);
+  border: 1px solid #3f3f46;
+  box-shadow: 
+    0 8px 16px rgba(0,0,0,0.8),
+    0 4px 4px rgba(0,0,0,0.6),
+    inset 0 2px 4px rgba(255,255,255,0.1),
+    inset 0 -2px 4px rgba(0,0,0,0.4);
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Dial Inner Grip */
+.cyber-dial::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  border-radius: 50%;
+  background: #09090b;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.9);
+  border: 1px solid #27272a;
+}
+
+/* Glowing Indicator */
+.dial-indicator {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 12px;
+  background-color: #4ade80;
+  border-radius: 2px;
+  box-shadow: 0 0 8px #4ade80, 0 0 16px #4ade80;
+  z-index: 10;
+}
+
+/* Futuristic Power Toggle */
+.cyber-power-btn {
+  width: 56px;
+  height: 28px;
+  background: #09090b;
+  border-radius: 14px;
+  border: 1px solid #27272a;
+  box-shadow: 
+    inset 2px 2px 6px rgba(0,0,0,0.9),
+    0 1px 1px rgba(255,255,255,0.05);
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.cyber-power-btn::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(to bottom, #3f3f46, #27272a);
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.2);
+}
+
+.cyber-power-btn.is-on {
+  border-color: #22c55e;
+  box-shadow: inset 2px 2px 6px rgba(0,0,0,0.9), 0 0 12px rgba(74, 222, 128, 0.1);
+}
+
+.cyber-power-btn.is-on::after {
+  left: 30px;
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80, 0 0 20px #4ade80, inset 0 1px 2px rgba(255,255,255,0.8);
+}
+
+/* Futuristic Speaker Vents */
+.cyber-vents {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 0 16px;
+  z-index: 1;
+}
+
+.vent-slit {
+  height: 6px;
+  width: 100%;
+  background: #050505;
+  border-radius: 3px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0,0,0,1),
+    0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* CRT Text Glow */
+.crt-text {
+  font-family: var(--font-crt);
+  text-shadow: 0 0 4px rgba(74, 222, 128, 0.6), 0 0 10px rgba(74, 222, 128, 0.4);
+}
+
+/* Chromatic Aberration */
+.chromatic {
+  text-shadow: 
+    -1px 0 0 rgba(255,0,0,0.5),
+    1px 0 0 rgba(0,255,255,0.5);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+  border-left: 1px solid #27272a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 4px;
+  border: 1px solid #27272a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4ade80;
+}
+
+/* Character Glitch Effect */
+.char-glitch {
+  display: inline-block;
+  animation: charGlitch 0.15s ease-in-out;
+}
+
+@keyframes charGlitch {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 1;
+    color: inherit;
+  }
+  20% {
+    transform: translate(-2px, 1px);
+    opacity: 0.8;
+    color: #ef4444;
+  }
+  40% {
+    transform: translate(2px, -1px);
+    opacity: 0.6;
+    color: #06b6d4;
+  }
+  60% {
+    transform: translate(-1px, 2px);
+    opacity: 0.9;
+    color: #4ade80;
+  }
+  80% {
+    transform: translate(1px, -2px);
+    opacity: 0.7;
+    color: inherit;
+  }
+}
