@@ -85,7 +85,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: '1',
-    title: 'WEPRINT',
+    title: 'WePrint',
     year: '2026',
     client: '企业合作项目',
     description: '一站式智能 3D 打印服务平台，支持用户拍照建模、AI 生成 3D 模型、在线预览、下单打印。包含用户端、管理端、后端服务、GPU 服务四个子系统，集成 AI 智能助手实现订单审核与设备诊断自动化。',
@@ -97,7 +97,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: '2',
-    title: 'IMMERSING',
+    title: 'ImmerSing',
     year: '2025-2026',
     client: '独立游戏项目',
     description: '沉浸式音乐战斗游戏，玩家通过歌唱控制战斗节奏。基于 Unity URP 开发，包含行为树 AI、音频分析、Buff 系统、状态机架构等核心模块。',
@@ -121,7 +121,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: '4',
-    title: 'NUTRILIFE',
+    title: 'NutriLife',
     year: '2026',
     client: '比赛项目',
     description: '私人终生饮食营养管理 APP，支持拍照识别食物、营养分析、个性化建议、周报复盘。基于 Flutter 开发，集成 AI 视觉识别与 LLM 智能建议。',
