@@ -229,11 +229,11 @@ export default function App() {
               </div>
 
               {/* Modal Content */}
-              <div className="flex-1 overflow-y-auto p-6 flex flex-col lg:flex-row gap-8">
+              <div className="flex-1 overflow-hidden p-0 flex flex-col lg:flex-row">
                 
                 {/* Media Player Section */}
-                <div className="flex-1 flex flex-col gap-4">
-                  <div className="cyber-inset aspect-video relative overflow-hidden flex items-center justify-center bg-black">
+                <div className="flex-1 flex flex-col gap-0 p-6 overflow-y-auto">
+                  <div className="cyber-inset aspect-video relative overflow-hidden flex items-center justify-center bg-black sticky top-0">
                     {activeProjectData.media[mediaIndex].type === 'video' ? (
                       <video 
                         src={activeProjectData.media[mediaIndex].url} 
@@ -259,21 +259,21 @@ export default function App() {
 
                   {/* Media Thumbnails */}
                   {activeProjectData.media.length > 1 && (
-                    <div className="flex gap-4 overflow-x-auto pb-2">
+                    <div className="flex gap-2 overflow-x-auto py-4 mt-4 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
                       {activeProjectData.media.map((m, idx) => (
                         <button
                           key={idx}
                           onClick={() => setMediaIndex(idx)}
-                          className={`cyber-btn relative w-32 aspect-video flex-shrink-0 overflow-hidden ${mediaIndex === idx ? 'border-[#4ade80]' : 'opacity-50'}`}
+                          className={`cyber-btn relative w-24 h-16 flex-shrink-0 overflow-hidden ${mediaIndex === idx ? 'border-[#4ade80] opacity-100' : 'opacity-50 hover:opacity-75'}`}
                         >
                           {m.type === 'video' ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-900">
-                              <Play size={24} className="text-zinc-500" />
+                              <Play size={16} className="text-zinc-500" />
                             </div>
                           ) : (
-                            <img src={m.url} alt="thumbnail" loading="lazy" decoding="async" className="w-full h-full object-cover opacity-50" />
+                            <img src={m.url} alt="thumbnail" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                           )}
-                          <div className="absolute bottom-1 right-1 bg-black/80 px-1 text-[10px] font-mono">
+                          <div className="absolute bottom-1 right-1 bg-black/80 px-1 text-[8px] font-mono text-zinc-400">
                             {m.type === 'video' ? 'VID' : 'IMG'}
                           </div>
                         </button>
@@ -282,41 +282,41 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Project Info Section */}
-                <div className="w-full lg:w-1/3 flex flex-col gap-6 font-mono">
-                  <div className="cyber-inset p-6">
-                    <h2 className="text-3xl font-bold text-white mb-6 chromatic">{activeProjectData.title}</h2>
+                {/* Project Info Section - Fixed width sidebar */}
+                <div className="w-full lg:w-80 flex-shrink-0 flex flex-col gap-6 font-mono p-6 border-l border-zinc-800 bg-[#080808] overflow-y-auto">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white mb-6 chromatic">{activeProjectData.title}</h2>
                     
-                    <div className="space-y-4 text-sm">
+                    <div className="space-y-3 text-xs">
                       <div className="flex justify-between border-b border-zinc-800 pb-2">
                         <span className="text-zinc-500">CLIENT</span>
-                        <span className="text-zinc-300">{activeProjectData.client}</span>
+                        <span className="text-zinc-300 text-right">{activeProjectData.client}</span>
                       </div>
                       <div className="flex justify-between border-b border-zinc-800 pb-2">
                         <span className="text-zinc-500">YEAR</span>
-                        <span className="text-zinc-300">{activeProjectData.year}</span>
+                        <span className="text-zinc-300 text-right">{activeProjectData.year}</span>
                       </div>
                       <div className="flex justify-between border-b border-zinc-800 pb-2">
                         <span className="text-zinc-500">ROLE</span>
-                        <span className="text-[#4ade80]">{activeProjectData.role}</span>
+                        <span className="text-[#4ade80] text-right">{activeProjectData.role}</span>
                       </div>
                     </div>
 
-                    <div className="mt-8">
-                      <span className="text-zinc-500 block mb-2 text-sm">MISSION_BRIEF</span>
-                      <p className="text-zinc-300 leading-relaxed text-sm">
+                    <div className="mt-6">
+                      <span className="text-zinc-500 block mb-2 text-xs">MISSION_BRIEF</span>
+                      <p className="text-zinc-300 leading-relaxed text-xs">
                         {activeProjectData.description}
                       </p>
-                      <div className="mt-4 font-pixel text-xs text-red-500 border border-red-900/50 bg-red-950/20 px-3 py-2 animate-pulse">
+                      <div className="mt-3 font-pixel text-[10px] text-red-500 border border-red-900/50 bg-red-950/20 px-2 py-1.5 animate-pulse">
                         {MODAL_TEXT.additionalInfo}
                       </div>
                     </div>
 
-                    <div className="mt-8">
-                      <span className="text-zinc-500 block mb-2 text-sm">TECH_STACK</span>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="mt-6">
+                      <span className="text-zinc-500 block mb-2 text-xs">TECH_STACK</span>
+                      <div className="flex flex-wrap gap-1.5">
                         {activeProjectData.tech.map((t, i) => (
-                          <span key={i} className="bg-zinc-900 px-2 py-1 border border-zinc-700 text-xs text-zinc-400">
+                          <span key={i} className="bg-zinc-900 px-2 py-1 border border-zinc-700 text-[10px] text-zinc-400">
                             {t}
                           </span>
                         ))}
