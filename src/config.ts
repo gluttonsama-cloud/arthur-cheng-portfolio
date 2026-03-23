@@ -92,13 +92,13 @@ export const PROJECTS: Project[] = [
     role: '主开发者',
     tech: ['REACT', 'NODE.JS', 'MONGODB', 'THREE.JS', 'LANGCHAIN'],
     media: [
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-1.png' },
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-2.png' },
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-3.png' },
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-4.png' },
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-5.png' },
-      { type: 'video', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-mobile.mp4' },
-      { type: 'video', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/WePrint-web.mp4' },
+      { type: 'image', url: '/images/WePrint-1.png' },
+      { type: 'image', url: '/images/WePrint-2.png' },
+      { type: 'image', url: '/images/WePrint-3.png' },
+      { type: 'image', url: '/images/WePrint-4.png' },
+      { type: 'image', url: '/images/WePrint-5.png' },
+      { type: 'video', url: '/images/WePrint-mobile.mp4' },
+      { type: 'video', url: '/images/WePrint-web.mp4' },
     ],
   },
   {
@@ -110,10 +110,10 @@ export const PROJECTS: Project[] = [
     role: '技术总监 / 系统架构',
     tech: ['UNITY', 'C#', 'URP', '行为树', '音频系统'],
     media: [
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/ImmerSing-1.png' },
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/ImmerSing-2.png' },
-      { type: 'image', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/ImmerSing-3.png' },
-      { type: 'video', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/ImmerSing.mp4' },
+      { type: 'image', url: '/images/ImmerSing-1.png' },
+      { type: 'image', url: '/images/ImmerSing-2.png' },
+      { type: 'image', url: '/images/ImmerSing-3.png' },
+      { type: 'video', url: '/images/ImmerSing.mp4' },
     ],
   },
   {
@@ -125,8 +125,8 @@ export const PROJECTS: Project[] = [
     role: '主开发者',
     tech: ['VUE 3', 'UNI-APP', 'VITE', 'SCSS'],
     media: [
-      { type: 'video', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/%E7%83%B9%E5%B0%8F%E7%99%BD-1.mp4' },
-      { type: 'video', url: 'https://cdn.jsdelivr.net/gh/gluttonsama-cloud/arthur-cheng-portfolio@main/public/images/%E7%83%B9%E5%B0%8F%E7%99%BD-2.mp4' },
+      { type: 'video', url: '/images/烹小白-1.mp4' },
+      { type: 'video', url: '/images/烹小白-2.mp4' },
     ],
   },
   {
