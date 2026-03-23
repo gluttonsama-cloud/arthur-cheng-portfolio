@@ -232,8 +232,8 @@ export default function App() {
               <div className="flex-1 overflow-hidden p-0 flex flex-col lg:flex-row">
                 
                 {/* Media Player Section */}
-                <div className="flex-1 flex flex-col gap-0 p-6 overflow-y-auto">
-                  <div className="cyber-inset aspect-video relative overflow-hidden flex items-center justify-center bg-black sticky top-0">
+                <div className="flex-1 flex flex-col gap-0 p-4 lg:p-6 overflow-y-auto">
+                  <div className="cyber-inset aspect-video relative overflow-hidden flex items-center justify-center bg-black">
                     {activeProjectData.media[mediaIndex].type === 'video' ? (
                       <video 
                         src={activeProjectData.media[mediaIndex].url} 
@@ -257,23 +257,22 @@ export default function App() {
                     <div className="scanlines-tv pointer-events-none opacity-30"></div>
                   </div>
 
-                  {/* Media Thumbnails */}
                   {activeProjectData.media.length > 1 && (
-                    <div className="flex gap-2 overflow-x-auto py-4 mt-4 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-900">
+                    <div className="flex gap-2 overflow-x-auto py-3 mt-3 max-h-20 lg:max-h-24">
                       {activeProjectData.media.map((m, idx) => (
                         <button
                           key={idx}
                           onClick={() => setMediaIndex(idx)}
-                          className={`cyber-btn relative w-24 h-16 flex-shrink-0 overflow-hidden ${mediaIndex === idx ? 'border-[#4ade80] opacity-100' : 'opacity-50 hover:opacity-75'}`}
+                          className={`cyber-btn relative w-20 h-12 lg:w-24 lg:h-14 flex-shrink-0 overflow-hidden ${mediaIndex === idx ? 'border-[#4ade80] opacity-100' : 'opacity-50 hover:opacity-75'}`}
                         >
                           {m.type === 'video' ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-900">
-                              <Play size={16} className="text-zinc-500" />
+                              <Play size={14} className="text-zinc-500" />
                             </div>
                           ) : (
                             <img src={m.url} alt="thumbnail" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                           )}
-                          <div className="absolute bottom-1 right-1 bg-black/80 px-1 text-[8px] font-mono text-zinc-400">
+                          <div className="absolute bottom-0.5 right-0.5 bg-black/80 px-1 text-[7px] lg:text-[8px] font-mono text-zinc-400">
                             {m.type === 'video' ? 'VID' : 'IMG'}
                           </div>
                         </button>
@@ -282,45 +281,42 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Project Info Section - Fixed width sidebar */}
-                <div className="w-full lg:w-80 flex-shrink-0 flex flex-col gap-6 font-mono p-6 border-l border-zinc-800 bg-[#080808] overflow-y-auto">
-                  <div>
-                    <h2 className="text-2xl font-bold text-white mb-6 chromatic">{activeProjectData.title}</h2>
-                    
-                    <div className="space-y-3 text-xs">
-                      <div className="flex justify-between border-b border-zinc-800 pb-2">
-                        <span className="text-zinc-500">CLIENT</span>
-                        <span className="text-zinc-300 text-right">{activeProjectData.client}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-zinc-800 pb-2">
-                        <span className="text-zinc-500">YEAR</span>
-                        <span className="text-zinc-300 text-right">{activeProjectData.year}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-zinc-800 pb-2">
-                        <span className="text-zinc-500">ROLE</span>
-                        <span className="text-[#4ade80] text-right">{activeProjectData.role}</span>
-                      </div>
+                <div className="w-full lg:w-80 flex-shrink-0 flex flex-col font-mono p-4 lg:p-5 border-t lg:border-t-0 lg:border-l border-zinc-800 bg-[#080808] overflow-y-auto">
+                  <h2 className="text-xl lg:text-2xl font-bold text-white mb-4 chromatic">{activeProjectData.title}</h2>
+                  
+                  <div className="space-y-2 text-xs lg:text-sm">
+                    <div className="flex justify-between border-b border-zinc-800 pb-2">
+                      <span className="text-zinc-500">CLIENT</span>
+                      <span className="text-zinc-300 text-right">{activeProjectData.client}</span>
                     </div>
-
-                    <div className="mt-6">
-                      <span className="text-zinc-500 block mb-2 text-xs">MISSION_BRIEF</span>
-                      <p className="text-zinc-300 leading-relaxed text-xs">
-                        {activeProjectData.description}
-                      </p>
-                      <div className="mt-3 font-pixel text-[10px] text-red-500 border border-red-900/50 bg-red-950/20 px-2 py-1.5 animate-pulse">
-                        {MODAL_TEXT.additionalInfo}
-                      </div>
+                    <div className="flex justify-between border-b border-zinc-800 pb-2">
+                      <span className="text-zinc-500">YEAR</span>
+                      <span className="text-zinc-300 text-right">{activeProjectData.year}</span>
                     </div>
+                    <div className="flex justify-between border-b border-zinc-800 pb-2">
+                      <span className="text-zinc-500">ROLE</span>
+                      <span className="text-[#4ade80] text-right">{activeProjectData.role}</span>
+                    </div>
+                  </div>
 
-                    <div className="mt-6">
-                      <span className="text-zinc-500 block mb-2 text-xs">TECH_STACK</span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {activeProjectData.tech.map((t, i) => (
-                          <span key={i} className="bg-zinc-900 px-2 py-1 border border-zinc-700 text-[10px] text-zinc-400">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
+                  <div className="mt-5">
+                    <span className="text-zinc-500 block mb-2 text-xs lg:text-sm">MISSION_BRIEF</span>
+                    <p className="text-zinc-300 leading-relaxed text-sm lg:text-base">
+                      {activeProjectData.description}
+                    </p>
+                    <div className="mt-4 font-pixel text-[10px] lg:text-xs text-red-500 border border-red-900/50 bg-red-950/20 px-2 py-1.5 animate-pulse">
+                      {MODAL_TEXT.additionalInfo}
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    <span className="text-zinc-500 block mb-2 text-xs lg:text-sm">TECH_STACK</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {activeProjectData.tech.map((t, i) => (
+                        <span key={i} className="bg-zinc-900 px-2 py-1 border border-zinc-700 text-[10px] lg:text-xs text-zinc-400">
+                          {t}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
