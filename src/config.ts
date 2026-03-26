@@ -19,8 +19,8 @@ export const PROFILE = {
   name: '程彦硕',
   
   // 个人简介 - 第一段（主要描述）
-  bioPrimary: `Freshman exploring full-stack development. Currently learning web dev, game dev, and AI agents—curious about turning ideas into reality.
-大一学生，正在探索计算机的各方各面。目前在学习 Web 开发、游戏开发与 AI Agent 应用，对将创意变成现实的过程充满好奇。`,
+  bioPrimary: `Freshman exploring full-stack development. Currently learning full-stack dev, game dev, and AI agents—curious about turning ideas into reality.
+大一学生，正在探索计算机的各方各面。目前在学习全栈开发、游戏开发与 AI Agent 应用，对将创意变成现实的过程充满好奇。`,
   
   // 个人简介 - 第二段（补充说明）
   bioSecondary: `Keeping an open mind, trying different directions. Every project is a learning opportunity.
@@ -127,6 +127,7 @@ export const PROJECTS: Project[] = [
     media: [
       { type: 'video', url: '/images/烹小白-1.mp4' },
       { type: 'video', url: '/images/烹小白-2.mp4' },
+      { type: 'video', url: '/images/烹小白.mp4' },
     ],
   },
   {

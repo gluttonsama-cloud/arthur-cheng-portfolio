@@ -1,27 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&family=Silkscreen&family=VT323&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+QingKe+HuangYou&family=DotGothic16&display=swap');
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Chakra Petch';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Share Tech Mono';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Silkscreen';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'VT323';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Noto Sans SC';
-  font-display: swap;
-}
-
 @theme {
   --font-sans: "Chakra Petch", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Share Tech Mono", "Noto Sans SC", ui-monospace, SFMono-Regular, monospace;
@@ -36,12 +15,22 @@ body {
   margin: 0;
   min-height: 100vh;
   scroll-behavior: smooth;
-  cursor: none; /* Hide default cursor for custom 3D cursor */
 }
 
-/* Hide cursor on interactive elements too */
-a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
-  cursor: none !important;
+@media (pointer: fine) {
+  body, #root, * {
+    cursor: none !important;
+  }
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+@media (pointer: fine) {
+  a, button, .cyber-btn, .cyber-dial, .cyber-power-btn, [role="button"] {
+    cursor: none !important;
+  }
 }
 
 /* Dynamic Cyber Grid Background */
@@ -81,10 +70,17 @@ a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
   background-size: 40px 40px;
   transform-origin: top center;
   transform: rotateX(70deg) translateZ(0);
-  animation: gridMove 1s linear infinite;
+  animation: gridMove 2s linear infinite;
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 40%);
   mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 40%);
   will-change: background-position;
+}
+
+@media (max-width: 768px) {
+  .cyber-grid, .cyber-grid-top {
+    animation-duration: 4s; /* Slower on mobile for battery */
+    background-size: 60px 60px;
+  }
 }
 
 .cyber-grid-top {
@@ -114,13 +110,15 @@ a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
   100% { background-position: 0 -40px; }
 }
 
-/* Pause background animations when modal is open */
+/* Hide expensive background animations entirely when modal is open to free GPU/CPU */
+.modal-open .cyber-grid-wrapper,
 .modal-open .cyber-grid,
 .modal-open .cyber-grid-top,
+.modal-open .glitch-overlay,
 .modal-open .glitch-slice-1,
 .modal-open .glitch-slice-2,
 .modal-open .glitch-slice-3 {
-  animation-play-state: paused;
+  display: none !important;
 }
 
 /* Enhanced Glitch Effects */
@@ -175,13 +173,13 @@ a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
   position: relative;
 }
 
-/* Hardware Noise Texture */
+/* Hardware Noise Texture - Optimized with static noise */
 .cyber-module::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04;
+  background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+  opacity: 0.1;
   pointer-events: none;
   border-radius: inherit;
   z-index: 0;
@@ -382,10 +380,66 @@ a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
   box-shadow: inset 2px 2px 6px rgba(0,0,0,0.9), 0 0 12px rgba(74, 222, 128, 0.1);
 }
 
+.cyber-power-btn:not(.is-on) {
+  animation: power-pulse 2s infinite ease-in-out;
+}
+
+@keyframes power-pulse {
+  0%, 100% { 
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.9), 0 0 2px rgba(74, 222, 128, 0.1);
+    border-color: #27272a;
+  }
+  50% { 
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.9), 0 0 10px rgba(74, 222, 128, 0.3);
+    border-color: rgba(74, 222, 128, 0.3);
+  }
+}
+
 .cyber-power-btn.is-on::after {
   left: 30px;
   background: #4ade80;
   box-shadow: 0 0 10px #4ade80, 0 0 20px #4ade80, inset 0 1px 2px rgba(255,255,255,0.8);
+}
+
+/* Hover effect Enhancement for interactive elements */
+.cyber-power-btn:hover, .cyber-dial:hover {
+  border-color: #4ade80;
+  filter: brightness(1.2);
+}
+
+/* Guide Hint Styles */
+.guide-hint {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(74, 222, 128, 0.9);
+  color: #000;
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+  pointer-events: none;
+  border-radius: 2px;
+  animation: float-y 1s infinite alternate ease-in-out;
+  z-index: 50;
+}
+
+.guide-hint::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(74, 222, 128, 0.9);
+}
+
+@keyframes float-y {
+  from { transform: translateX(-50%) translateY(0); }
+  to { transform: translateX(-50%) translateY(-5px); }
 }
 
 /* Futuristic Speaker Vents */
@@ -470,4 +524,13 @@ a, button, .cyber-btn, .cyber-dial, .cyber-power-btn {
     opacity: 0.7;
     color: inherit;
   }
+}
+
+/* Scrollbar Hide Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
