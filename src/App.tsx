@@ -275,9 +275,8 @@ export default function App() {
       setIsTuning(true);
       setTimeout(() => setIsTuning(false), 600);
       
-      // Update first visit status
+      // Update first visit status in storage, but keep hints active for this session
       if (isFirstVisit) {
-        setIsFirstVisit(false);
         localStorage.setItem('sys_power_init', 'true');
       }
     } else {
@@ -779,8 +778,8 @@ export default function App() {
                       style={{ transform: `rotate(${channel * (360 / PROJECTS.length)}deg)` }}
                     >
                       <div className="dial-indicator"></div>
-                      {isPowerOn && isFirstVisit && (
-                        <div className="guide-hint">旋转切换</div>
+                      {isFirstVisit && (
+                        <div className="guide-hint" style={{ animationDelay: '0.8s' }}>旋转切换</div>
                       )}
                     </div>
                   </div>
