@@ -260,6 +260,11 @@ export default function App() {
   const handleChannelChange = () => {
     if (!isPowerOn) return;
     
+    // Dismiss hint after interaction
+    if (isFirstVisit) {
+      setIsFirstVisit(false);
+    }
+    
     setIsTuning(true);
     setChannel((prev) => (prev + 1) % PROJECTS.length);
     
