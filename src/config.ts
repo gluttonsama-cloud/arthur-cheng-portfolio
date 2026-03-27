@@ -62,7 +62,7 @@ export const VIDEOS: VideoItem[] = [
     title: 'web（管理端）演示DEMO',
     description: '智能 3D 打印服务平台演示视频 - 核心流程展示',
     url: '/images/WePrint-web1.mp4',
-    thumbnail: '/images/WePrint-web.png',
+    thumbnail: '/images/Weprint-web.png',
     tags: ['AI', '3D_PRINT', 'WEB']
   }
 ];
