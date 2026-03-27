@@ -29,10 +29,51 @@ export const PROFILE = {
   // 网站标题栏文字
   navLinks: [
     { label: 'VIEWPORT', href: '#viewport' },
+    { label: 'MEDIA_STREAM', href: '#media' },
     { label: 'DATABANKS', href: '#databanks' },
     { label: 'UPLINK', href: '#uplink' },
   ],
 } as const;
+
+// ==========================================
+// 视频展示数据
+// ==========================================
+
+export interface VideoItem {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  thumbnail: string;
+  tags: string[];
+}
+
+export const VIDEOS: VideoItem[] = [
+  {
+    id: 'V1',
+    title: 'WEPRINT_SYSTEM_DEMO',
+    description: '智能 3D 打印服务平台演示视频 - 核心流程展示',
+    url: '/images/WePrint-web.mp4',
+    thumbnail: '/images/WePrint-1.png',
+    tags: ['AI', '3D_PRINT', 'WEB']
+  },
+  {
+    id: 'V2',
+    title: 'IMMERSING_GAMEPLAY',
+    description: '沉浸式音乐战斗游戏演示 - 核心战斗系统',
+    url: '/images/ImmerSing.mp4',
+    thumbnail: '/images/ImmerSing-1.png',
+    tags: ['UNITY', 'GAME_DEV']
+  },
+  {
+    id: 'V3',
+    title: 'COOK_EASY_PREVIEW',
+    description: '烹小白跨平台应用预览 - AI 烹饪助手功能',
+    url: '/images/烹小白.mp4',
+    thumbnail: '/images/烹小白-1.png',
+    tags: ['VUE', 'UI_UX']
+  }
+];
 
 // ==========================================
 // 技能列表
