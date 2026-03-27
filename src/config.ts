@@ -51,7 +51,7 @@ export interface VideoItem {
 export const VIDEOS: VideoItem[] = [
   {
     id: 'V1',
-    title: 'WEPRINT_SYSTEM_DEMO',
+    title: 'app（用户端）演示DEMO',
     description: '智能 3D 打印服务平台演示视频 - 核心流程展示',
     url: '/images/WePrint-mobile.mp4',
     thumbnail: '/images/WePrint-1.png',
@@ -59,10 +59,10 @@ export const VIDEOS: VideoItem[] = [
   },
   {
     id: 'V2',
-    title: 'WEPRINT_SYSTEM_DEMO',
+    title: 'web（管理端）演示DEMO',
     description: '智能 3D 打印服务平台演示视频 - 核心流程展示',
     url: '/images/WePrint-web1.mp4',
-    thumbnail: '/images/WePrint-1.png',
+    thumbnail: '/images/WePrint-web.png',
     tags: ['AI', '3D_PRINT', 'WEB']
   }
 ];
