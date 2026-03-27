@@ -14,18 +14,18 @@
 export const PROFILE = {
   // 网站标题（显示在导航栏）
   siteName: 'SYS.ARCHIVE',
-  
+
   // 你的名字（可选，目前未使用）
   name: '程彦硕',
-  
+
   // 个人简介 - 第一段（主要描述）
   bioPrimary: `Freshman exploring full-stack development. Currently learning full-stack dev, game dev, and AI agents—curious about turning ideas into reality.
 大一学生，正在探索计算机的各方各面。目前在学习全栈开发、游戏开发与 AI Agent 应用，对将创意变成现实的过程充满好奇。`,
-  
+
   // 个人简介 - 第二段（补充说明）
   bioSecondary: `Keeping an open mind, trying different directions. Every project is a learning opportunity.
 保持开放的心态，尝试不同的技术方向。每一个项目都是一次学习的机会。`,
-  
+
   // 网站标题栏文字
   navLinks: [
     { label: 'VIEWPORT', href: '#viewport' },
@@ -53,25 +53,17 @@ export const VIDEOS: VideoItem[] = [
     id: 'V1',
     title: 'WEPRINT_SYSTEM_DEMO',
     description: '智能 3D 打印服务平台演示视频 - 核心流程展示',
-    url: '/images/WePrint-web.mp4',
+    url: '/images/WePrint-mobile.mp4',
     thumbnail: '/images/WePrint-1.png',
-    tags: ['AI', '3D_PRINT', 'WEB']
+    tags: ['AI', '3D_PRINT', 'APP']
   },
   {
     id: 'V2',
-    title: 'IMMERSING_GAMEPLAY',
-    description: '沉浸式音乐战斗游戏演示 - 核心战斗系统',
-    url: '/images/ImmerSing.mp4',
-    thumbnail: '/images/ImmerSing-1.png',
-    tags: ['UNITY', 'GAME_DEV']
-  },
-  {
-    id: 'V3',
-    title: 'COOK_EASY_PREVIEW',
-    description: '烹小白跨平台应用预览 - AI 烹饪助手功能',
-    url: '/images/烹小白.mp4',
-    thumbnail: '/images/烹小白-1.png',
-    tags: ['VUE', 'UI_UX']
+    title: 'WEPRINT_SYSTEM_DEMO',
+    description: '智能 3D 打印服务平台演示视频 - 核心流程展示',
+    url: '/images/WePrint-web1.mp4',
+    thumbnail: '/images/WePrint-1.png',
+    tags: ['AI', '3D_PRINT', 'WEB']
   }
 ];
 
@@ -95,10 +87,10 @@ export const SKILLS = [
 export const SOCIAL_LINKS = {
   // GitHub 个人主页链接
   github: 'https://github.com/gluttonsama-cloud',
-  
+
   // LinkedIn 个人主页链接
   linkedin: 'https://linkedin.com/in/yourusername',
-  
+
   // 电子邮件地址（会自动转换为 mailto: 链接）
   email: 'gluttonsama@gmail.com',
 } as const;
@@ -192,7 +184,7 @@ export const PROJECTS: Project[] = [
 export const MODAL_TEXT = {
   // 项目详情页底部附加文字
   additionalInfo: `> ACCESS DENIED - INSUFFICIENT CLEARANCE FOR CLASSIFIED DATA`,
-  
+
   // 文件标题格式（{title} 会被替换为项目标题）
   fileTitle: 'FILE: {title}.DAT',
 } as const;
@@ -204,7 +196,7 @@ export const MODAL_TEXT = {
 export const STATUS_TEXT = {
   // 等待连接提示
   awaitingConnection: 'AWAITING TRANSMISSION...',
-  
+
   // 建立连接标题
   connectionTitle: 'ESTABLISH_UPLINK',
 } as const;

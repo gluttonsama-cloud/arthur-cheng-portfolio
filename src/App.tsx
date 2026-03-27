@@ -1,89 +1,11 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion/react';
 import { Github, Linkedin, Mail, Terminal, Cpu, Database, Network, Play, Image as ImageIcon, X, ThumbsUp } from 'lucide-react';
-import { PROJECTS, VIDEOS, PROFILE, SKILLS, SOCIAL_LINKS, MODAL_TEXT, STATUS_TEXT } from './config';
+import { PROJECTS, PROFILE, SKILLS, SOCIAL_LINKS, MODAL_TEXT, STATUS_TEXT } from './config';
 import { getProjectLikes, likeProject, checkHasLiked, trackVisit, getVisitorStats, ADVICE_LIBRARY, AdviceMessage, addAdvice, getAdvices } from './cloudbase';
-import { MessageSquare, Plus, Check, Video } from 'lucide-react';
+import { MessageSquare, Plus, Check } from 'lucide-react';
 
-function Cursor() {
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  
-  // Use raw motion values for position to ensure ZERO lag (no spring for position)
-  // Only use spring for scale and rotate for organic transitions
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Check for touch devices only once
-    const mql = window.matchMedia('(pointer: coarse)');
-    setIsMobile(mql.matches);
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
-    };
-    
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('a, button, .cyber-btn, .cyber-dial, .cyber-power-btn, [role="button"]')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
-    };
-
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mouseover', handleMouseOver);
-    window.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('mouseenter', handleMouseEnter);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseover', handleMouseOver);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('mouseenter', handleMouseEnter);
-    };
-  }, [cursorX, cursorY, isVisible]);
-
-  if (isMobile) return null;
-
-  return (
-    <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-screen hidden md:block will-change-transform"
-      style={{ 
-        x: cursorX, // Direct mapping = ZERO LAG
-        y: cursorY, // Direct mapping = ZERO LAG
-        opacity: isVisible ? 1 : 0
-      }}
-      animate={{
-        scale: isHovering ? 1.4 : 1,
-        rotate: isHovering ? 45 : 0
-      }}
-      transition={{ 
-        scale: { type: "spring", stiffness: 400, damping: 25 },
-        rotate: { type: "spring", stiffness: 400, damping: 25 },
-        opacity: { duration: 0.15 }
-      }}
-    >
-      <div className="absolute -top-4 -left-4 w-8 h-8">
-        {/* Cyan Layer - Minimal static offset for stereoscopic effect without trailing lag */}
-        <div className="absolute inset-0 border-[3px] border-cyan-400 translate-x-[-2px] translate-y-[2px] opacity-60 mix-blend-screen"></div>
-        {/* Red Layer - Minimal static offset */}
-        <div className="absolute inset-0 border-[3px] border-red-500 translate-x-[2px] translate-y-[-2px] opacity-60 mix-blend-screen"></div>
-        {/* Core White Layer */}
-        <div className="absolute inset-0 border-[3px] border-white opacity-100 shadow-[0_0_15px_rgba(255,255,255,0.4)]"></div>
-        {/* Center Target */}
-        <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white -translate-x-1/2 -translate-y-1/2 shadow-[0_0_10px_#4ade80]"></div>
-      </div>
-    </motion.div>
-  );
-}
+import Cursor from './components/Cursor';
 
 const GlitchText = memo(({ text, className = "" }: { text: string; className?: string }) => {
   const [glitchIndex, setGlitchIndex] = useState<number | null>(null);
@@ -165,72 +87,7 @@ const AdviceWall = ({ advices }: { advices: AdviceMessage[] }) => {
   );
 };
 
-const MediaArchive = ({ onSelectVideo }: { onSelectVideo: (url: string) => void }) => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {VIDEOS.map((video) => (
-        <motion.div 
-          key={video.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="cyber-module group overflow-hidden flex flex-col h-full border-zinc-800/50 hover:border-[#4ade80]/30 transition-all duration-500"
-        >
-          {/* Video Preview Header */}
-          <div className="bg-black/40 px-4 py-2 border-b border-zinc-800/50 flex justify-between items-center font-mono text-[10px] tracking-widest text-zinc-500">
-            <span>FEED_ID: {video.id}</span>
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-              LIVE_STREAM
-            </div>
-          </div>
 
-          {/* Thumbnail Container */}
-          <div 
-            className="aspect-video relative overflow-hidden group/thumb cursor-none"
-            onClick={() => onSelectVideo(video.url)}
-          >
-            <img 
-              src={video.thumbnail} 
-              alt={video.title} 
-              className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-            
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300">
-              <div className="w-16 h-16 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/40 flex items-center justify-center backdrop-blur-sm">
-                <Play size={32} className="text-[#4ade80] ml-1" />
-              </div>
-            </div>
-
-            {/* Static Scanline Overlay */}
-            <div className="scanlines-tv pointer-events-none opacity-10"></div>
-          </div>
-
-          {/* Content Area */}
-          <div className="p-5 flex-1 flex flex-col gap-3">
-            <h3 className="font-mono text-lg font-bold text-white tracking-tight chromatic group-hover:text-[#4ade80] transition-colors">
-              {video.title}
-            </h3>
-            <p className="text-zinc-400 text-sm leading-relaxed line-clamp-2 font-mono opacity-80 group-hover:opacity-100">
-              {video.description}
-            </p>
-            <div className="mt-auto pt-4 flex flex-wrap gap-2">
-              {video.tags.map((tag, i) => (
-                <span key={i} className="text-[10px] font-mono px-2 py-0.5 border border-zinc-800 text-zinc-500 rounded-sm">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Footer Decoration */}
-          <div className="h-1 bg-gradient-to-r from-transparent via-zinc-800/50 to-transparent"></div>
-        </motion.div>
-      ))}
-    </div>
-  );
-};
 
 export default function App() {
   const [isPowerOn, setIsPowerOn] = useState(false);
@@ -239,8 +96,6 @@ export default function App() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
   const [mediaIndex, setMediaIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
-  const [activeSection, setActiveSection] = useState<'main' | 'media'>('main');
-  const [currentVideoUrl, setCurrentVideoUrl] = useState<string | null>(null);
   
   // Like system states
   const [likesCount, setLikesCount] = useState<number | null>(null);
@@ -670,34 +525,23 @@ export default function App() {
                     className="max-w-7xl max-h-screen relative flex items-center justify-center"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {activeProjectData ? (
-                      activeProjectData.media[mediaIndex].type === 'video' ? (
-                        <video 
-                          src={activeProjectData.media[mediaIndex].url} 
-                          controls 
-                          autoPlay 
-                          className="max-w-full max-h-[85vh] shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-zinc-800"
-                        />
-                      ) : (
-                        <img 
-                          src={activeProjectData.media[mediaIndex].url} 
-                          alt="Zoomed view"
-                          className="max-w-full max-h-[85vh] object-contain shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-zinc-800"
-                        />
-                      )
+                    {activeProjectData.media[mediaIndex].type === 'video' ? (
+                      <video 
+                        src={activeProjectData.media[mediaIndex].url} 
+                        controls 
+                        autoPlay 
+                        className="max-w-full max-h-[85vh] shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-zinc-800"
+                      />
                     ) : (
-                      currentVideoUrl && (
-                        <video 
-                          src={currentVideoUrl} 
-                          controls 
-                          autoPlay 
-                          className="max-w-full max-h-[85vh] shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-zinc-800"
-                        />
-                      )
+                      <img 
+                        src={activeProjectData.media[mediaIndex].url} 
+                        alt="Zoomed view"
+                        className="max-w-full max-h-[85vh] object-contain shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-zinc-800"
+                      />
                     )}
                     
                     <div className="absolute -bottom-12 left-0 right-0 text-center font-mono text-[#4ade80] text-sm tracking-widest">
-                      FILE::{activeProjectData ? activeProjectData.title.toUpperCase() : 'MEDIA_STREAM'}_{activeProjectData ? mediaIndex + 1 : '01'}.DAT // [FULL_RESOLUTION_UPLINK]
+                      FILE::{activeProjectData.title.toUpperCase()}_{mediaIndex + 1}.DAT // [FULL_RESOLUTION_UPLINK]
                     </div>
                   </div>
                 </motion.div>
@@ -728,31 +572,13 @@ export default function App() {
           </div>
           <div className="flex gap-4 font-mono text-xs tracking-widest">
             {PROFILE.navLinks.map((link) => (
-              <button 
-                key={link.href} 
-                onClick={() => {
-                  if (link.href === '#media') {
-                    setActiveSection('media');
-                  } else {
-                    setActiveSection('main');
-                    // Use standard anchor scrolling if already in main
-                    if (activeSection === 'main') {
-                      window.location.hash = link.href;
-                    }
-                  }
-                }}
-                className={`cyber-btn px-4 py-2 flex items-center gap-2 ${
-                  (link.href === '#media' && activeSection === 'media') || 
-                  (link.href !== '#media' && activeSection === 'main' && (typeof window !== 'undefined' && window.location.hash === link.href))
-                    ? 'text-[#4ade80] border-[#4ade80]/50' : ''
-                }`}
-              >
+              <a key={link.href} href={link.href === '#media' ? './videos.html' : link.href} className="cyber-btn px-4 py-2 flex items-center gap-2">
                 {link.href === '#viewport' && <Cpu size={14}/>}
-                {link.href === '#media' && <Video size={14}/>}
+                {link.href === '#media' && <Play size={14}/>}
                 {link.href === '#databanks' && <Database size={14}/>}
                 {link.href === '#uplink' && <Network size={14}/>}
                 {link.label}
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -760,9 +586,7 @@ export default function App() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col gap-8 md:gap-12">
         
-        {activeSection === 'main' ? (
-          <>
-            {/* Hero Section (The Main Console) */}
+        {/* Hero Section (The Main Console) */}
         <section id="viewport" className="cyber-module w-full p-4 md:p-8 mt-4">
           
           <div className="flex justify-between items-center mb-6 font-mono text-xs tracking-widest border-b border-zinc-800 pb-4 relative z-10">
@@ -980,32 +804,6 @@ export default function App() {
             <AdviceWall advices={advices} />
           </div>
         </section>
-          </>
-        ) : (
-          <motion.section 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="w-full flex flex-col gap-8"
-          >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-zinc-800 pb-6">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white chromatic mb-2 uppercase tracking-tighter">MEDIA_ARCHIVE</h2>
-                <p className="text-zinc-500 font-mono text-sm tracking-widest uppercase">
-                  [STATUS: ENCRYPTED_STREAM_DECRYPTED] // [LOCATION: LOCAL_DATACENTER]
-                </p>
-              </div>
-              <div className="flex items-center gap-3 font-mono text-[10px] text-[#4ade80] bg-[#4ade80]/5 px-4 py-2 border border-[#4ade80]/20 rounded-sm">
-                <div className="w-1.5 h-1.5 bg-[#4ade80] rounded-full animate-ping"></div>
-                UPLINK_STABLE // 1.2 GBPS
-              </div>
-            </div>
-
-            <MediaArchive onSelectVideo={(url) => {
-              setCurrentVideoUrl(url);
-              setIsZoomed(true);
-            }} />
-          </motion.section>
-        )}
 
         {/* Advice Post Modal */}
         <AnimatePresence>
